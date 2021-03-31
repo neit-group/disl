@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2016 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -28,78 +28,80 @@ import java.lang.reflect.Field
  * */
 @CompileStatic
 abstract class Lookup extends MappingSource {
-	List<Column> columns
+    List<Column> columns
 
-	abstract List<List> getRecords();
-	
-	public String getSchema() {
-		'default'
-	}
+    abstract List<List> getRecords();
 
-	public PhysicalSchema getPhysicalSchema() {
-		Context.getContext().getPhysicalSchema(getSchema())
-	}
-	
-	public void init() {
-		super.init()
-		columns=new LinkedList<Column>()
-		initColumns()
-	}
+    public String getSchema() {
+        'default'
+    }
 
-	protected void initColumns() {
-		getFieldsByType(Column).each {initColumn(it)}
-	}
+    public PhysicalSchema getPhysicalSchema() {
+        Context.getContext().getPhysicalSchema(getSchema())
+    }
 
-	protected void initColumn(Field f) {
-		Column column=(Column)this[f.getName()]
+    public void init() {
+        super.init()
+        columns = new LinkedList<Column>()
+        initColumns()
+    }
 
-		if (column==null) {
-			column=(Column)f.getType().newInstance()
-			column.parent=this
-			this[f.getName()]=column
-		}
-		column.setName(f.getName());
-		columns.add(column)
-	}
+    protected void initColumns() {
+        getFieldsByType(Column).each { initColumn(it) }
+    }
+
+    protected void initColumn(Field f) {
+        Column column = (Column) this[f.getName()]
+
+        if (column == null) {
+            column = (Column) f.getType().newInstance()
+            column.parent = this
+            this[f.getName()] = column
+        }
+        column.setName(f.getName());
+        columns.add(column)
+    }
 
 
-	public String getRefference(){
-		if (sourceWithClause) {
-			return sourceAlias
-		}
-		if (sourceAlias!=null) {
-			return "(\n${getLookupQuery()}) $sourceAlias"
-		}
-		return "(${getLookupQuery()})"
-	}
+    public String getRefference() {
+        if (sourceWithClause) {
+            return sourceAlias
+        }
+        if (sourceAlias != null) {
+            return "(\n${getLookupQuery()}) $sourceAlias"
+        }
+        return "(${getLookupQuery()})"
+    }
 
-	public String getLookupQuery() {
-		"""\
+    public String getLookupQuery() {
+        """\
 	/*Lookup $name*/
 	select * from 
 		${physicalSchema.recordsToSubquery(createRecordsFromList())}
 	/*End of lookup $name*/"""
 
-	}
-	
-	String getRefferenceColumnList() {
-		getColumns().collect {"${it.name}"}.join(",")
-	}
+    }
 
-	protected List<Map> createRecordsFromList() {
-		List<List> recordList=getRecords()
-		List<Map> result=(List<Map>)recordList.collect { values->
-			Map record=new LinkedHashMap()
-			columns.each {column ->
-				record.put(column.name, values[columns.indexOf(column)])
-			}
-			return record
-		}
-		return result
-	}
+    String getRefferenceColumnList() {
+        getColumns().collect { "${it.name}" }.join(",")
+    }
 
-	@Override
-	String getWithReference() {
-		"$sourceAlias as (${getLookupQuery()})"
-	}
+    protected List<Map> createRecordsFromList() {
+        def recordList = records
+        def result = recordList.collect {
+            values ->
+                def record = new LinkedHashMap()
+                columns.each {
+                    column -> (record[column.name] = values[columns.indexOf(column)])
+                }
+                record
+        }
+        result as List<Map>
+    }
+
+    @Override
+    String getWithReference() {
+        "$sourceAlias as (${getLookupQuery()})"
+    }
+
 }

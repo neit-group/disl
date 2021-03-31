@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -21,26 +21,31 @@
 	 id "com.github.hierynomus.license" version "0.11.0"
  }
  
-apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'java-library-distribution'
 apply plugin: 'maven'
-apply plugin: 'signing'
 
-project.group='com.github.kaja78'
-project.version="1.1.3-SNAPSHOT"
+if (project.hasProperty("signing.keyId")) {
+    apply plugin: 'signing'
+    signing {
+        sign configurations.archives
+    }
+}
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+project.group='com.github.neit-group'
+project.version="1.0.0"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories { mavenCentral() }
 
 dependencies {
-	compile 'org.codehaus.groovy:groovy-all:2.3.10'
-	compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'org.codehaus.groovy:groovy-all:3.0.7'
+	compile 'org.slf4j:slf4j-api:1.7.30'
 	compile 'junit:junit:4.12'
 	testCompile 'org.hsqldb:hsqldb:2.3.2'
-	testRuntime 'org.slf4j:slf4j-simple:1.7.21'
+	testRuntime 'org.slf4j:slf4j-simple:1.7.30'
 	testRuntime fileTree(dir: 'lib', include: '*.jar')
 }
 
@@ -70,56 +75,6 @@ artifacts {
 }
 
 
-signing {
-	sign configurations.archives
-}
-
 String getVersionName() {
 	'git describe --tags'.execute(null,project.projectDir).text.trim()
-}
-
-
-uploadArchives {
-	repositories {
-		mavenDeployer {
-			snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-				authentication(userName: sonatypeUser, password: sonatypePassword)
-			}
-			
-			beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-			repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-				authentication(userName: sonatypeUser, password: sonatypePassword)
-			}
-		
-			pom.project {
-				name 'disl'
-				description 'disl = data integration specific language. Goal of this project is to implement groovy based domain specific language supporting modelling of data integration projects. Disl will support data modeling and data mapping including support for MDA transformations and unit testing.'
-				url 'https://github.com/kaja78/disl'
-				licenses {
-					license {
-						name 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
-						url 'http://www.gnu.org/licenses/gpl.txt'
-						distribution 'repo'
-					}
-				}
-				developers {
-					developer {
-						name 'Karel Hübl'
-						email 'karel.huebl@gmail.com'
-						organization 'Karel Hübl'
-						organizationUrl 'https://github.com/kaja78'						
-					}
-				}
-				issueManagement {
-					system 'Github'
-					url 'https://github.com/kaja78/disl/issues'					
-				}
-				scm {
-					connection 'scm:git:git@github.com:kaja78/disl.git'
-					developerConnection 'scm:git:git@github.com:kaja78/disl.git'
-					url 'git:git@github.com:kaja78/disl.git'
-				}
-			}
-		}
-	}
 }
