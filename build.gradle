@@ -20,20 +20,14 @@
  plugins {
 	 id "com.github.hierynomus.license" version "0.11.0"
  }
- 
+
+apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'java-library-distribution'
 apply plugin: 'maven'
 
-if (project.hasProperty("signing.keyId")) {
-    apply plugin: 'signing'
-    signing {
-        sign configurations.archives
-    }
-}
-
-project.group='com.github.neit-group'
-project.version="1.0.0"
+project.group='com.neit'
+project.version="1.0.1"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -72,9 +66,4 @@ task groovydocJar(type: Jar, dependsOn: groovydoc) {
  
 artifacts {
 	archives groovydocJar, sourcesJar
-}
-
-
-String getVersionName() {
-	'git describe --tags'.execute(null,project.projectDir).text.trim()
 }
