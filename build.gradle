@@ -67,3 +67,33 @@ task groovydocJar(type: Jar, dependsOn: groovydoc) {
 artifacts {
 	archives groovydocJar, sourcesJar
 }
+
+uploadArchives {
+	repositories {
+		mavenDeployer {
+			snapshotRepository(url: "http://130.61.184.219:8081/repository/adw-neit-snapshot/") {
+				authentication(userName: neitNexusUser, password: neitNexusPassword)
+			}
+			repository(url: "http://130.61.184.219:8081/repository/adw-neit-release/") {
+				authentication(userName: neitNexusUser, password: neitNexusPassword)
+			}
+
+			pom.project {
+				name 'disl'
+				description 'disl = data integration specific language. Goal of this project is to implement groovy based domain specific language supporting modelling of data integration projects. Disl will support data modeling and data mapping including support for MDA transformations and unit testing.'
+				url 'https://github.com/neit-group/disl'
+				licenses {
+					license {
+						name 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
+						url 'http://www.gnu.org/licenses/gpl.txt'
+						distribution 'repo'
+					}
+				}
+				issueManagement {
+					system 'JIRA'
+					url 'https://neit.atlassian.net/secure/RapidBoard.jspa?rapidView=2&projectKey=ADWNEIT'
+				}
+			}
+		}
+	}
+}
