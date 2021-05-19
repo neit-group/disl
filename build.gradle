@@ -79,7 +79,7 @@ uploadArchives {
 			}
 
 			pom.project {
-				name 'disl'
+				name 'dislNeit'
 				description 'disl = data integration specific language. Goal of this project is to implement groovy based domain specific language supporting modelling of data integration projects. Disl will support data modeling and data mapping including support for MDA transformations and unit testing.'
 				url 'https://github.com/neit-group/disl'
 				licenses {
