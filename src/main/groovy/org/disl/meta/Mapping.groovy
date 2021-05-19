@@ -341,6 +341,30 @@ abstract class Mapping  extends MappingSource implements Initializable,Executabl
 		addColumnMapping new AggregateColumnMapping(expression: aggregateFunction, parent: this)
 	}
 
+    /**
+     * Shorthand for createConstantColumnMapping.
+     * @return
+     */
+    ColumnMapping c(String constantValue) {
+        createConstantColumnMapping(constantValue)
+    }
+
+    ColumnMapping c(Integer constantValue) {
+        c(constantValue.toString())
+    }
+
+    ColumnMapping c(Double constantValue) {
+        c(constantValue.toString())
+    }
+
+    ColumnMapping c(AbstractSqlExpression constantValue) {
+        c(constantValue.toString())
+    }
+
+    ColumnMapping createConstantColumnMapping(String constantValue) {
+        addColumnMapping new ConstantColumnMapping(expression: constantValue, parent: this)
+    }
+
 	String getSQLQuery() {
 		"""\
 	/*Mapping ${name}*/${getWithClause()}
