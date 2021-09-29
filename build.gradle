@@ -71,10 +71,10 @@ artifacts {
 uploadArchives {
 	repositories {
 		mavenDeployer {
-			snapshotRepository(url: "http://129.159.200.190/nexus/repository/adw-neit-snapshot/") {
+			snapshotRepository(url: "https://nexus.adwnowt.neit.cz/nexus/repository/adw-neit-snapshot/") {
 				authentication(userName: neitNexusUser, password: neitNexusPassword)
 			}
-			repository(url: "http://129.159.200.190/nexus/repository/adw-neit-release/") {
+			repository(url: "https://nexus.adwnowt.neit.cz/nexus/repository/adw-neit-release/") {
 				authentication(userName: neitNexusUser, password: neitNexusPassword)
 			}
 
