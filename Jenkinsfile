@@ -2,7 +2,9 @@ def githubCredentialsId='bb23ce6e-aab2-4273-bf83-5e639f6a2324'
 def nexusCredentialsId='neitNexus'
 
  pipeline {
-     agent any
+     agent {
+         label 'jnlp_slave'
+     }
      stages {
          stage('Upload archives') {
              steps {
