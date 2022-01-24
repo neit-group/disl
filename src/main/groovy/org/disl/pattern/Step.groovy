@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2016 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -19,60 +19,57 @@
 package org.disl.pattern
 
 import groovy.transform.CompileStatic
-
 import org.disl.meta.Context
-import org.disl.meta.Table
-
 
 /**
  * Represents one operation to be performed as part of Pattern execution.
  * */
 @CompileStatic
-public abstract class Step extends AbstractExecutable {
-	
-	String name;
+abstract class Step<P extends Pattern> extends AbstractExecutable {
 
-	/**
-	 *  Decides if this should be executed. By default only steps of the same execution mode as the context execution mode are executed.
-	 * */
-	public boolean isToExecute() {
-		Context.getContext().getExecutionMode().equals(this.getExecutionMode())
-	}
+    String name
 
-	/**
-	 * Step execution mode.
-	 * */
-	String getExecutionMode(){
-		Context.EXECUTION_MODE_DEFAULT
-	}
+    /**
+     *  Decides if this should be executed. By default only steps of the same execution mode as the context execution mode are executed.
+     * */
+    boolean isToExecute() {
+        Context.getContext().getExecutionMode() == this.getExecutionMode()
+    }
 
-	Pattern pattern
+    /**
+     * Step execution mode.
+     * */
+    String getExecutionMode() {
+        Context.EXECUTION_MODE_DEFAULT
+    }
 
-	abstract String getCode();
+    P pattern
 
-	@Override
-	public void simulate() {
-		println "/*  Simulating step ${this}:*/"
-		println """\t${code.replace("\n","\n\t")}""";
-	}
+    abstract String getCode()
 
-	public String getName() {
-		if (name==null) {
-			return this.getClass().getSimpleName()
-		}
-		return name
-	}
-	
-	public void setName(String name) {
-		this.name=name
-	}
+    @Override
+    void simulate() {
+        println "/*  Simulating step ${this}:*/"
+        println """\t${code.replace("\n", "\n\t")}"""
+    }
 
-	public Context getContext() {
-		Context.getContext()
-	}
+    String getName() {
+        if (name == null) {
+            return this.getClass().getSimpleName()
+        }
+        return name
+    }
 
-	@Override
-	public String toString() {
-		return getName()
-	}
+    void setName(String name) {
+        this.name = name
+    }
+
+    Context getContext() {
+        Context.getContext()
+    }
+
+    @Override
+    String toString() {
+        return getName()
+    }
 }
