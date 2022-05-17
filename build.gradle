@@ -23,7 +23,6 @@ plugins {
     id 'groovy'
     id 'java-library-distribution'
     id 'maven-publish'
-    id 'signing'
 }
 
 project.group = 'com.neit'
@@ -84,12 +83,6 @@ artifacts {
     archives groovydocJar, sourcesJar
 }
 
-if (dislSigning) {
-    signing {
-        sign configurations.archives
-    }
-}
-
 String getVersionName() {
     'git describe --tags'.execute(null, project.projectDir).text.trim()
 }
@@ -120,9 +113,6 @@ publishing {
                 name = 'dislNeit'
                 description = 'disl = data integration specific language. Goal of this project is to implement groovy based domain specific language supporting modelling of data integration projects. Disl will support data modeling and data mapping including support for MDA transformations and unit testing.'
                 url = 'https://github.com/neit-group/disl'
-                signing {
-                    sign publishing.publications.mavenDeployer
-                }
                 licenses {
                     license {
                         name = 'GNU GENERAL PUBLIC LICENSE, Version 3.0'
