@@ -36,16 +36,6 @@ def nexusSnapshotUrl = "${nexusUrl}/adw-neit-snapshot/"
 def nexusReleaseUrl = "${nexusUrl}/adw-neit-release/"
 
 repositories {
-    mavenLocal()
-    maven {
-        def releasesRepoUrl = nexusReleaseUrl
-        def snapshotsRepoUrl = nexusSnapshotUrl
-        url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-        credentials {
-            username = neitNexusReadUser
-            password = neitNexusReadPassword
-        }
-    }
     mavenCentral()
 }
 
