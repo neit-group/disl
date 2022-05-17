@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2016 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -121,7 +121,7 @@ class TestMapping extends DislTestCase {
 	void testConstant() {
 		TestingMapping mapping=MetaFactory.create(TestingMapping)
 		assertEquals("1",(String)mapping.CONSTANT)
-		assertEquals("1+1",(String)mapping.CONSTANT+1)
+		assertEquals("1+1",(String)(mapping.CONSTANT+1))
 	}
 
 	@Test

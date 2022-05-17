@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2016 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2016 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -69,7 +69,7 @@ abstract class AbstractDislTestSuite {
 	protected void addTestSuite(String name,Class assignableType) {
 		TestSuite suite=new TestSuite(name)
 		getClassFinder().findNonAbstractTypes(assignableType).each {
-			suite.addTest(new JUnit4TestAdapter(it))
+			suite.addTest(new JUnit4TestAdapter(it as Class<?>))
 		}
 		this.testSuite.addTest(suite)		
 	}
