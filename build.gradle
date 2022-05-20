@@ -83,6 +83,9 @@ java {
 
 publishing {
     repositories {
+        if (publishToLocalMavenRepository.toBoolean()) {
+            mavenLocal()
+        }
         maven {
             def releasesRepoUrl = nexusReleaseUrl
             def snapshotsRepoUrl = nexusSnapshotUrl
