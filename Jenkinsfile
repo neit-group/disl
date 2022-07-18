@@ -13,7 +13,7 @@ pipeline {
                 }
             }
         }
-        stage('Publish release') {
+        stage('Publish SNAPSHOT') {
                     steps {
                         withCredentials([usernamePassword(credentialsId: nexusCredentialsId, usernameVariable: 'username', passwordVariable: 'password')]){
                             sh './gradlew publish -PneitNexusUser=${username} -PneitNexusPassword=${password} -Pdisl_neit.doSnapshot=true'
