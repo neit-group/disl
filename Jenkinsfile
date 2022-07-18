@@ -6,12 +6,19 @@ pipeline {
         label 'jnlp_slave'
     }
     stages {
-        stage('Publish') {
+        stage('Publish release') {
             steps {
                 withCredentials([usernamePassword(credentialsId: nexusCredentialsId, usernameVariable: 'username', passwordVariable: 'password')]){
                     sh './gradlew publish -PneitNexusUser=${username} -PneitNexusPassword=${password}'
                 }
             }
         }
+        stage('Publish release') {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: nexusCredentialsId, usernameVariable: 'username', passwordVariable: 'password')]){
+                            sh './gradlew publish -PneitNexusUser=${username} -PneitNexusPassword=${password} -Pdisl_neit.doSnapshot=true'
+                        }
+                    }
+                }
     }
 }

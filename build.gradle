@@ -25,13 +25,24 @@ plugins {
     id 'maven-publish'
 }
 
+def getReleaseVersionNumber() {
+    return "1.0.6"
+}
+
+def getReleaseVersion() {
+    if (hasProperty('disl_neit.doSnapshot')) {
+        return getReleaseVersionNumber()+"-SNAPSHOT"
+    }
+    return getReleaseVersionNumber()
+}
+
 project.group = 'com.neit'
-project.version = "1.0.5"
+project.version = getReleaseVersion()
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def nexusUrl = 'https://nexus.adwnowt.neit.cz//nexus/repository'
+def nexusUrl = 'https://nexus.adwnow.oci.neit.cz//nexus/repository'
 def nexusSnapshotUrl = "${nexusUrl}/adw-neit-snapshot/"
 def nexusReleaseUrl = "${nexusUrl}/adw-neit-release/"
 
