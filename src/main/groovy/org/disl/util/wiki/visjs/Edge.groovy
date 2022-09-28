@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2017 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2017 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -57,7 +57,7 @@ class Edge {
                 to: target.class.name,
                 from: src.class.name,
                 label: 'target',
-                color: 'red'
+                color: 'orange'
         )
     }
 

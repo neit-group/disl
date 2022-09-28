@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 - 2017 Karel Hübl <karel.huebl@gmail.com>.
+ * Copyright 2015 - 2017 Karel Hï¿½bl <karel.huebl@gmail.com>.
  *
  * This file is part of disl.
  *
@@ -54,7 +54,7 @@ class MappingLineageNetwork {
         }
         Node node = new LineageNode(mapping,depth)
         if (depth == 1) {
-            node.color = 'Red'
+            node.color = 'orange'
         }
         mapping.sources.each {
             edges.add Edge.mappingSource(it, mapping)
